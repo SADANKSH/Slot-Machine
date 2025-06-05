@@ -26,8 +26,28 @@ def get_lines():
 
     return lines
 
-def main():
+def get_bets(amount,lines):
+    while True:
+        betline = input("Please enter the BET Amount for each line: ")
+        if betline.isdigit():
+            bet = int(betline)*lines
+            if MIN_BET<=bet<=int(amount) and MIN_BET<=bet<=MAX_BET:
+                break
+            elif bet>MAX_BET:
+                print("BET must be smaller than $500")
+            elif bet>int(amount):
+                print(f"You have ${amount} in you wallet.")
+            else:
+                print("BET must be greater than $1")
+        else:
+            print("Please enter a valid BET Amount.")
+
+    return bet
+
+def game():
     balance=deposit()
+    lines=get_lines()
+    bets=get_bets(balance,lines)
     print(f"You have ${balance} in your wallet.")
     
-main()
+game()
