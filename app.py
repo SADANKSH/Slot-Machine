@@ -51,11 +51,18 @@ def get_bets(amount,lines):
 def update_wallet(amount,bet):
     amount=amount-bet
     return amount
-    
+
 def game():
-    balance=deposit()
-    lines=get_lines()
-    bets=get_bets(balance,lines)
-    print(f"You have ${balance} in your wallet.")
-    
-game()
+       while True:
+        balance=0
+        if balance==0:
+            balance=deposit()
+
+        while balance>0:
+            lines=get_lines()
+            bet=get_bets(balance,lines)
+            balance = update_wallet(balance, bet)
+            print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
+
+if __name__='__main__':  
+    game()
