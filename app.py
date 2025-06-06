@@ -64,5 +64,5 @@ def game():
             balance = update_wallet(balance, bet)
             print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
 
-if __name__='__main__':  
+if __name__=='__main__':  
     game()
