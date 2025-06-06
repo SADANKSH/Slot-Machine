@@ -1,3 +1,7 @@
+MAX_LINES = 3
+MIN_BET = 1
+MAX_BET = 500
+
 def deposit():
     while True:
         amount=input("Please enter the Deposit Amount: $")
@@ -44,6 +48,10 @@ def get_bets(amount,lines):
 
     return bet
 
+def update_wallet(amount,bet):
+    amount=amount-bet
+    return amount
+    
 def game():
     balance=deposit()
     lines=get_lines()
