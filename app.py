@@ -24,7 +24,7 @@ def get_lines():
             if 0<lines<=3:
                 break
             else:
-                print("Lines must be greater than 0.")
+                print("Lines must be greater than 0 and less than 3.")
         else:
             print("Please enter a valid number for valid number of lines")
 
@@ -34,19 +34,20 @@ def get_bets(amount,lines):
     while True:
         betline = input("Please enter the BET Amount for each line: ")
         if betline.isdigit():
-            bet = int(betline)*lines
-            if MIN_BET<=bet<=int(amount) and MIN_BET<=bet<=MAX_BET:
+            tbet = int(betline)*lines
+            bet=int(betline)
+            if MIN_BET<=tbet<=int(amount) and MIN_BET<=tbet<=MAX_BET:
                 break
-            elif bet>MAX_BET:
+            elif tbet>MAX_BET:
                 print("BET must be smaller than $500")
-            elif bet>int(amount):
+            elif tbet>int(amount):
                 print(f"You have ${amount} in you wallet.")
             else:
                 print("BET must be greater than $1")
         else:
             print("Please enter a valid BET Amount.")
 
-    return bet
+    return tbet,bet
 
 def update_wallet(amount,bet):
     amount=amount-bet
@@ -60,8 +61,8 @@ def game():
 
         while balance>0:
             lines=get_lines()
-            bet=get_bets(balance,lines)
-            balance = update_wallet(balance, bet)
+            bet,betline=get_bets(balance,lines)
+            balance = update_wallet(balance, bet, winnings)
             print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
 
 if __name__=='__main__':  
