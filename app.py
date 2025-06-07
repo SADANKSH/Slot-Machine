@@ -1,6 +1,47 @@
+import random
+
 MAX_LINES = 3
 MIN_BET = 1
 MAX_BET = 500
+
+ROWS  = 3
+COLS = 3
+
+symbol_count={
+    'A' : 2,
+    'B' : 4,
+    'C' : 6,
+    'D' : 8
+}
+
+
+def slot_spin(rows,cols,symbols):
+    all_symbols = []
+    for symbol, symbols_count in symbols.items():
+        for _ in range(symbols_count):
+            all_symbols.append(symbol)
+    columns = []
+    for _ in range(cols):
+        column =[]
+        current_symbols=all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
+
+        columns.append(column)
+    return columns
+
+
+def print_slot(columns):
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row],end="")
+        print()
+
 
 def deposit():
     while True:
@@ -16,6 +57,7 @@ def deposit():
 
     return amount
 
+
 def get_lines():
     while True:
         lines = input("Please enter the number of lines you want to  bet on 1-3 : ")
@@ -29,6 +71,7 @@ def get_lines():
             print("Please enter a valid number for valid number of lines")
 
     return lines
+
 
 def get_bets(amount,lines):
     while True:
@@ -49,9 +92,11 @@ def get_bets(amount,lines):
 
     return tbet,bet
 
+
 def update_wallet(amount,bet):
     amount=amount-bet
     return amount
+
 
 def game():
        while True:
@@ -62,8 +107,11 @@ def game():
         while balance>0:
             lines=get_lines()
             bet,betline=get_bets(balance,lines)
-            balance = update_wallet(balance, bet, winnings)
+            slots=slot_spin(ROWS,COLS,symbol_count)
+            print_slot(slots)
+            balance = update_wallet(balance, bet)
             print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
+
 
 if __name__=='__main__':  
     game()
