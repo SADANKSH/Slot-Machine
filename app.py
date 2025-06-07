@@ -14,6 +14,13 @@ symbol_count={
     'D' : 8
 }
 
+symbol_values={
+    'A' : 5,
+    'B' : 4,
+    'C' : 3,
+    'D' : 2
+}
+
 
 def slot_spin(rows,cols,symbols):
     all_symbols = []
@@ -98,6 +105,21 @@ def update_wallet(amount,bet):
     return amount
 
 
+def winning(columns , lines , bet, values):
+    winnings = 0
+    winning_lines =[]
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol]*bet
+            winning_lines.append(line + 1)
+    return winnings,winning_lines
+
+
 def game():
        while True:
         balance=0
@@ -109,7 +131,10 @@ def game():
             bet,betline=get_bets(balance,lines)
             slots=slot_spin(ROWS,COLS,symbol_count)
             print_slot(slots)
-            balance = update_wallet(balance, bet)
+            winnings, winning_lines = winning(slots,lines,betline,symbol_values)
+            balance = update_wallet(balance, bet, winnings)
+            print(f"You won ${winnings}")
+            print(f"You won on lines : ", *winning_lines)
             print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
 
 
