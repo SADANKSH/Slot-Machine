@@ -1,12 +1,16 @@
+# Importing Random module to generate the slots.
 import random
 
+# Setting Basic Parameters
 MAX_LINES = 3
 MIN_BET = 1
 MAX_BET = 500
 
+# Deciding the Matrix of the  slot Machine
 ROWS  = 3
 COLS = 3
 
+# Slot Symbols and their Values.
 symbol_count={
     'A' : 2,
     'B' : 4,
@@ -21,35 +25,7 @@ symbol_values={
     'D' : 2
 }
 
-
-def slot_spin(rows,cols,symbols):
-    all_symbols = []
-    for symbol, symbols_count in symbols.items():
-        for _ in range(symbols_count):
-            all_symbols.append(symbol)
-    columns = []
-    for _ in range(cols):
-        column =[]
-        current_symbols=all_symbols[:]
-        for _ in range(rows):
-            value = random.choice(current_symbols)
-            current_symbols.remove(value)
-            column.append(value)
-
-        columns.append(column)
-    return columns
-
-
-def print_slot(columns):
-    for row in range(len(columns[0])):
-        for i, column in enumerate(columns):
-            if i != len(columns) - 1:
-                print(column[row], end=" | ")
-            else:
-                print(column[row],end="")
-        print()
-
-
+# Deposit Function
 def deposit():
     while True:
         amount=input("Please enter the Deposit Amount: $")
@@ -64,7 +40,7 @@ def deposit():
 
     return amount
 
-
+# Geting the number of lines to bet on
 def get_lines():
     while True:
         lines = input("Please enter the number of lines you want to  bet on 1-3 : ")
@@ -79,7 +55,7 @@ def get_lines():
 
     return lines
 
-
+# Getting the  bet amount for each line
 def get_bets(amount,lines):
     while True:
         betline = input("Please enter the BET Amount for each line: ")
@@ -99,12 +75,43 @@ def get_bets(amount,lines):
 
     return tbet,bet
 
-
-def update_wallet(amount,bet):
-    amount=amount-bet
+# Updating the wallet
+def update_wallet(amount,bet,winnings):
+    if winnings>0:
+        amount=amount-bet+winnings
+    else:
+        amount-=bet
     return amount
 
+# Generating the slots using the Random module imported earlier
+def slot_spin(rows,cols,symbols):
+    all_symbols = []
+    for symbol, symbols_count in symbols.items():
+        for _ in range(symbols_count):
+            all_symbols.append(symbol)
+    columns = []
+    for _ in range(cols):
+        column =[]
+        current_symbols=all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
 
+        columns.append(column)
+    return columns
+
+# Printing the slots as the generated slot was actually not printed
+def print_slot(columns):
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row],end="")
+        print()
+
+# Defining the winning conditions.
 def winning(columns , lines , bet, values):
     winnings = 0
     winning_lines =[]
@@ -119,7 +126,7 @@ def winning(columns , lines , bet, values):
             winning_lines.append(line + 1)
     return winnings,winning_lines
 
-
+# Utilizing all the  functions to form the  game and play it.
 def game():
        while True:
         balance=0
@@ -137,6 +144,6 @@ def game():
             print(f"You won on lines : ", *winning_lines)
             print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
 
-
-if __name__=='__main__':  
+# Adding this to make it runable as a module in further projects if required.
+if __name__=='__main__':
     game()
