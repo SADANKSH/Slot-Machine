@@ -40,7 +40,7 @@ def deposit():
 
     return amount
 
-# Geting the number of lines to bet on
+# Getting the number of lines to bet on
 def get_lines():
     while True:
         lines = input("Please enter the number of lines you want to  bet on 1-3 : ")
@@ -144,6 +144,6 @@ def game():
             print(f"You won on lines : ", *winning_lines)
             print(f'Your balance is ${balance} and you selected {lines} lines.You have successfully placed a bet of ${bet}')
 
-# Adding this to make it runable as a module in further projects if required.
+# Adding this to make it runnable as a module in further projects if required.
 if __name__=='__main__':
     game()
